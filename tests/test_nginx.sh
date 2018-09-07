@@ -10,7 +10,7 @@ TEST_DOCKER_RUN_PARAM=''
     [ 0 -ne "$TEST_NGINX__RUN_AS_DAEMON" ] &&
     TEST_DOCKER_RUN_PARAM=' -d '
 
-$ROOT_PATH/bin/generate_nginx.sh > $ABSOLUTE_PATH/nginx.conf \
+$ROOT_PATH/bin/generator/nginx.sh > $ABSOLUTE_PATH/nginx.conf \
     && sudo docker run \
     $TEST_DOCKER_RUN_PARAM \
     -v $ABSOLUTE_PATH/nginx.conf:/etc/nginx/conf.d/default.conf \
