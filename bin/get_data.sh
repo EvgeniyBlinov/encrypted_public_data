@@ -30,6 +30,8 @@ for KEY_VENDOR in `ls -1 $KEY_PATH`; do
         DECRYPTED_DATA_FILE="$DECRYPTED_DATA_PATH/$KEY_VENDOR/$DATA_NAME/data.txt"
 
         DATA_UNHASHED="$(unhash_str "$DATA_CONTENT" "$KEY_PATH/$KEY_VENDOR/$KEY_NAME" 2>/dev/null)"
+        [ -z "$DATA_UNHASHED" ] &&
+            echo "Data not found!"
 
         [ -n "$DATA_UNHASHED" ] &&
             [ ! -f "$DECRYPTED_DATA_FILE" ] &&
