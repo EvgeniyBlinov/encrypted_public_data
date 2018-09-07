@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_PATH=`dirname $0`
 ABSOLUTE_PATH=`readlink -m ${SCRIPT_PATH}`
-ROOT_PATH=`readlink -m ${ABSOLUTE_PATH}/..`
+ROOT_PATH=`readlink -m ${ABSOLUTE_PATH}/../..`
 
 KEY_PATH="${ROOT_PATH}/keys"
 
