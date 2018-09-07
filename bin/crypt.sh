@@ -37,56 +37,10 @@ if [ ! -f "${DATA_FULLPATH}/${DATA_FILE}" ]; then
     exit 1
 fi
 
-function hash_str {
-    local str="$1"
-    local key="$2"
 
-    echo -n "$1" |
-        openssl enc \
-            -e \
-            -aes-256-cbc \
-            -a \
-            -nosalt \
-            -kfile "$2"
-}
-
-function unhash_str {
-    local str="$1"
-    local key="$2"
-
-    echo "$1" |
-        openssl enc \
-            -d \
-            -aes-256-cbc \
-            -a \
-            -nosalt \
-            -kfile "$2"
-}
-
-function decrypt_meta {
-    local meta="$1"
-    local key="$2"
-
-    cat "$meta"
-    echo '------------------------------------------------------------------------'
-    source "$meta"
-    print_meta_param 'DATA_HASH' "$(unhash_str "$DATA_HASH" "$key")"
-    print_meta_param 'DATA_CONTENT' "$(unhash_str "$DATA_CONTENT" "$key")"
-}
-
-function print_meta_param {
-    echo "${1}='$2'"
-}
-
-function create_crypted_meta {
-    (
-    print_meta_param 'DATA_HASH' $(hash_str "$DATA_NAME/$KEY_VENDOR" "$KEY_PATH/$KEY_VENDOR/$KEY_NAME" | sed 's/\n//g')
-    print_meta_param 'DATA_CONTENT' $(hash_str "$(cat ${DATA_FULLPATH}/${DATA_FILE})" "$KEY_PATH/$KEY_VENDOR/$KEY_NAME" | sed 's/\n//g')
-    )> "$DATA_CRYPTED/$KEY_VENDOR/$KEY_NAME.txt"
-}
+source $ABSOLUTE_PATH/.functions.sh
 
 mkdir -p "$DATA_CRYPTED"
-rm $DATA_CRYPTED/* 2>/dev/null
 
 if [ "$DATA_ACTION_PARAM" == "e" ]; then
     for KEY_VENDOR in `ls -1 $KEY_PATH`; do
