@@ -1,3 +1,16 @@
+# Encrypted public data
+
+### Dependencies
+
+- bash
+- openssl
+- curl (get_data.sh)
+- ssh-keygen (keygen.sh)
+
+For tests only
+
+- docker
+
 ### Commands
 
 `bin/crypt.sh e ssh_loopback` - encrypt data
