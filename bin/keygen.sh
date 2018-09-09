@@ -9,6 +9,12 @@ KEY_VENDOR="$1"
 KEY_NAME="$2"
 KEY_FULLPATH="${KEY_PATH}/$KEY_VENDOR/$KEY_NAME"
 
+[ -z "$KEY_VENDOR" ] &&
+    echo "KEY_VENDOR not found!" && exit 1
+
+[ -z "$KEY_NAME" ] &&
+    echo "KEY_NAME not found!" && exit 2
+
 mkdir -p "${KEY_PATH}/$KEY_VENDOR"
 
 if [ -f "$KEY_FULLPATH" ] || [ -f "${KEY_FULLPATH}.pub" ]; then
