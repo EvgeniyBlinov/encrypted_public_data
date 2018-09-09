@@ -30,13 +30,8 @@ if [ ! -d "$DATA_FULLPATH" ]; then
     exit 1
 fi
 
+# Only for DATA_ACTIVE for all data
 source "${DATA_FULLPATH}/${DATA_METAFILE}"
-
-if [ ! -f "${DATA_FULLPATH}/${DATA_FILE}" ]; then
-    echo "Data file: ${DATA_FULLPATH}/${DATA_FILE} not found!"
-    exit 1
-fi
-
 
 source $ABSOLUTE_PATH/.functions.sh
 
@@ -46,6 +41,11 @@ if [ "$DATA_ACTION_PARAM" == "e" ]; then
     for KEY_VENDOR in `ls -1 $KEY_PATH`; do
         for KEY_NAME in `ls -1 $KEY_PATH/$KEY_VENDOR | grep -v '.pub'`; do
             mkdir -p "$DATA_CRYPTED/$KEY_VENDOR"
+            source "${DATA_FULLPATH}/${DATA_METAFILE}"
+            if [ ! -f "${DATA_FULLPATH}/${DATA_FILE}" ]; then
+                echo "Data file: ${DATA_FULLPATH}/${DATA_FILE} not found!"
+                exit 1
+            fi
             create_crypted_meta
         done
     done
